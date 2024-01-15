@@ -1,4 +1,4 @@
-from .support import FileInfo
+from support import FileInfo
 
 class Term:
     def __init__(self, info: FileInfo = None):
@@ -66,7 +66,7 @@ class TmPred(Term):
         super().__init__(info)
         self._value = value
 
-    def stringify_term(self) -> {
+    def stringify_term(self) -> str: 
         def f(n, t:term):
             if isinstance(t, TmZero):
                 return 
@@ -75,4 +75,3 @@ class TmPred(Term):
             else:
                 return str(n)
         f(1, self._value)
-    }
