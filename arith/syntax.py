@@ -46,7 +46,7 @@ class TmZero(Term):
         return '0'
 
 class TmSucc(Term):
-    def __init__(self, value: Term, info: FileInfo):
+    def __init__(self, value: Term, info: FileInfo = None):
         super().__init__(info)
         self._value = value
 
@@ -54,10 +54,10 @@ class TmSucc(Term):
         def f(n, t:Term):
             if isinstance(t, TmZero):
                 return str(n)
-            elif isintance(t, TmSucc):
+            elif isinstance(t, TmSucc):
                 return f(n+1, t._value)
             else:
-                return f'succ {t.stringify_a_term()})'
+                return f'(succ {t.stringify_a_term()})'
         
         return f(1, self._value)
 
@@ -83,4 +83,27 @@ class TmIsZero(Term):
 
     def stringify_app_term(self) -> str:
         return f'iszero {self._value.stringify_a_term()}'
+
+def test_consts():
+    assert repr(TmZero()) == '0'
+    assert repr(TmTrue()) == 'true'
+    assert repr(TmFalse()) == 'false'
+
+def test_succ():
+    n = TmZero()
+    for i in range(10):
+        assert repr(n) == str(i)
+        n = TmSucc(n)
+
+    assert repr(TmSucc(TmTrue())) == '(succ true)'
+    assert repr(TmSucc(TmSucc(TmTrue()))) == '(succ true)'
+
+def test_iszero():
+    assert repr(TmIsZero(TmZero())) == 'iszero 0'
+    assert repr(TmIsZero(TmTrue())) == 'iszero true'
+    assert repr(TmIsZero(TmFalse())) == 'iszero false'
+
+if __name__ == '__main__':
+    test_consts()
+    test_succ()
 
