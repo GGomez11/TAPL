@@ -1,6 +1,6 @@
 class FileInfo:
     def __repr__(self):
-        return 'Uknown file and line>:'
+        return '<Uknown file and line>:'
 
 class Info(FileInfo):
     def __init__(self, file_name, line_num, char_pos):
