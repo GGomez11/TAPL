@@ -75,3 +75,12 @@ class TmPred(Term):
             else:
                 return str(n)
         f(1, self._value)
+
+class TmIsZero(Term):
+    def __init__(self, value: Term, info: FileInfo = None):
+        super().__init__(info)
+        self._value = value
+
+    def stringify_app_term(self) -> str:
+        return f'iszero {self._value.stringify_a_term()}'
+
